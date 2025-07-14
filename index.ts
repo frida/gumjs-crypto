@@ -19,7 +19,20 @@ export class Hash {
         // TODO: TypedArray
         if (data instanceof DataView)
             throw new Error("DataView not yet supported");
-        if (inputEncoding !== undefined)
+
+        else if (typeof data == "string" && inputEncoding === "hex") {
+            if(data.length % 2 != 0)
+                throw new Error(`Hex must be even length, got length: ${data.length}`);
+
+            // This is stricter than node as node ignores invalid hex-strings (except length).
+            if (!/^[0-9A-Fa-f]*$/g.test(data))
+                throw new Error(`Hex must be 0-9 or a-f`);
+            data = new Buffer(data, inputEncoding);
+        }
+        else if (typeof data == "string" && inputEncoding === "base64") {
+            data = new Buffer(data, inputEncoding);
+        }
+        else if (inputEncoding !== undefined)
             throw new Error("inputEncoding not yet supported");
 
         if (data instanceof Buffer)
