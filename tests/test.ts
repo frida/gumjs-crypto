@@ -17,9 +17,15 @@ function digest() {
 }
 
 function update() {
-    const hash = helloSha512();
-    hash.update("hello world");
-    assert(hash.digest("hex") !== helloWorldSha);
+    assert(helloSha512().update("hello world").digest("hex") !== helloWorldSha);
+
+    const hexHash = crypto.createHash("md5").update("dc10ae47cb1686d7e7b4f54363b51ced0cd40b0c", "hex");
+    assert(hexHash.digest("hex") == "0cd258c4493108f6e4ad3c0a4d937f2f")
+    assertThrows(() => crypto.createHash("md5").update("1", "hex"));
+    assertThrows(() => crypto.createHash("md5").update("BOOM", "hex"));
+
+    const b64Hash = crypto.createHash("md5").update("3BCuR8sWhtfntPVDY7Uc7QzUCww=", "base64");
+    assert(b64Hash.digest("hex") == "0cd258c4493108f6e4ad3c0a4d937f2f")
 }
 
 function digestThrows() {
