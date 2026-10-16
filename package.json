@@ -19,7 +19,9 @@
   "type": "module",
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "injest",
+    "test:v8": "injest --target local-v8"
   },
   "license": "MIT",
   "repository": {
@@ -30,8 +32,12 @@
     "url": "https://github.com/frida/gumjs-crypto/issues"
   },
   "devDependencies": {
+    "@frida/injest": "^0.2.1",
     "@types/frida-gum": "^18.4.3",
     "@types/node": "^20.8.6",
     "typescript": "^5.1.3"
+  },
+  "allowScripts": {
+    "frida@17.24.0": true
   }
 }

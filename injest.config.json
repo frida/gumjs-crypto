@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/@frida/injest/schema/injest.config.schema.json",
+  "default": "local",
+  "targets": {
+    "local": { "device": "local", "session": "system" },
+    "local-v8": { "device": "local", "session": "system", "runtime": "v8" }
+  }
+}

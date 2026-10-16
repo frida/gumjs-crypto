@@ -22,7 +22,7 @@ export class Hash {
         if (inputEncoding !== undefined)
             throw new Error("inputEncoding not yet supported");
 
-        if (data instanceof Buffer)
+        if (Buffer.isBuffer(data))
             this.checksum.update(data.buffer as ArrayBuffer);
         else
             this.checksum.update(data);
