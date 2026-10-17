@@ -46,7 +46,11 @@ function toChecksumData(data: string | ArrayBufferView, inputEncoding?: BufferEn
     if (inputEncoding === undefined)
         return data;
 
-    return viewToArrayBuffer(Buffer.from(data, inputEncoding));
+    const bytes = Buffer.from(data, inputEncoding);
+    if (inputEncoding === "hex" && bytes.length * 2 !== data.length)
+        throw new Error("Invalid hex string");
+
+    return viewToArrayBuffer(bytes);
 }
 
 function viewToArrayBuffer(view: ArrayBufferView): ArrayBuffer {

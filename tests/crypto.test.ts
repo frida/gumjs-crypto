@@ -65,10 +65,25 @@ describe("createHash", () => {
         expect(digestOfBytes(view)).toBe(helloWorldSha);
     });
 
-    test("update with an input encoding", () => {
+    test("update with a hex input encoding", () => {
         const hash = crypto.createHash("sha512");
         hash.update("68656c6c6f20776f726c64", "hex");
         expect(hash.digest("hex")).toBe(helloWorldSha);
+    });
+
+    test("update with a base64 input encoding", () => {
+        const hash = crypto.createHash("sha512");
+        hash.update("aGVsbG8gd29ybGQ=", "base64");
+        expect(hash.digest("hex")).toBe(helloWorldSha);
+    });
+
+    test("update with odd-length hex throws", () => {
+        expect(() => crypto.createHash("sha512").update("6", "hex")).toThrow();
+    });
+
+    test("update with invalid hex digits throws", () => {
+        expect(() => crypto.createHash("sha512").update("BOOM", "hex")).toThrow();
+        expect(() => crypto.createHash("sha512").update("glam", "hex")).toThrow();
     });
 });
 
